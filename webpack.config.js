@@ -59,4 +59,8 @@ module.exports = {
 
     // switch on source-map as a separate file: bundle.js.map
     devtool: 'source-map',
+
+    experiments: {
+        topLevelAwait: true
+    }
 };

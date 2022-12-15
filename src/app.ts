@@ -1,4 +1,9 @@
-/* eslint-disable no-redeclare */
+import { ReferenceItem, UL, RefBook } from './classes';
+import { Category } from './enums';
+import { printRefBook, checkoutBooks, createCustomer, createCustomerID, printBook, setDefaultConfig, someDamade, getAllBooks } from './functions';
+import { Librarian, Author, Book, Logger, TOptions } from './interfaces';
+import { PersonBook } from './types';
+import { Library } from './classes/library';
 
 showHello('greeting', 'TypeScript');
 
@@ -9,7 +14,7 @@ function showHello(divName: string, name: string) {
 
 // Task 2==============================================================
 
-enum Category { JavaScript, CSS, HTML, TypeScript, Angular };
+
 
 // type Book = {
 //     id: number;
@@ -19,68 +24,6 @@ enum Category { JavaScript, CSS, HTML, TypeScript, Angular };
 //     category: Category;
 // };
 
-interface Book {
-    id: number;
-    title: string;
-    author: string;
-    available: boolean;
-    category: Category;
-    pages?: number;
-    markDamaged?(reason: string): void;
-};
-
-function getAllBooks (): readonly Book[] {
-    const books = <const> [
-        { id: 1, title: 'Refactoring JavaScript', category: Category.JavaScript, author: 'Evan Burchard', available: true},
-        { id: 2, title: 'JavaScript Testing', category: Category.JavaScript, author: 'Liang Yuxian Eugene', available: false },
-        { id: 3, title: 'CSS Secrets', category: Category.CSS, author: 'Lea Verou', available: true },
-        { id: 4, title: 'Mastering JavaScript Object-Oriented Programming', category: Category.JavaScript, author: 'Andrea Chiarelli', available: true }];
-    return books;
-}
-
-
-function logFirstAvailable(books: readonly Book[] = getAllBooks()): void {
-    console.log(`The number of books: ${books.length}`);
-
-    const title = books.find(book => book.available).title;
-    console.log(`First available book: ${title}`);
-}
-
-
-function getBookTitlesByCategory(inputCategory: Category = Category.JavaScript): string[]  {
-    const books = getAllBooks();
-
-    const filteredBooks = books.filter(book => book.category === inputCategory).map (book => book.title);
-
-    return filteredBooks;
-}
-
-
-function logBookTitles(titles: Array<string>): void {
-    titles.forEach(title => console.log (title));
-}
-
-function getBookAuthorByIndex(index: number): [title: string, author: string] {
-    const books = getAllBooks();
-
-    const para: [string, string]  = [books[index].title, books[index].author];
-    // const {title, author} = books[index];
-    return para;
-}
-
-function calcTotalPages(): void {
-    const data = <const> [
-        { lib: 'libName1', books: 1_000_000_000, avgPagesPerBook: 250 },
-        { lib: 'libName2', books: 5_000_000_000, avgPagesPerBook: 300 },
-        { lib: 'libName3', books: 3_000_000_000, avgPagesPerBook: 280 }
-    ];
-
-    const r = data.reduce((acc: bigint, obj) => {
-        return acc + (BigInt(obj.books) * BigInt(obj.avgPagesPerBook));
-    }, 0n);
-
-    return console.log(r);
-}
 
 // Task 2.01=====================================================================
 
@@ -92,137 +35,221 @@ function calcTotalPages(): void {
 
 // Task 3.01=====================================================================
 
-function createCustomerID(name: string, id: number): string {
-    return `${id} / ${name}`;
-}
-
-const myID: string = createCustomerID('Ann', 10);
+// const myID: string = createCustomerID('Ann', 10);
 // console.log(myID);
 
 // let idGenerator: (name: string, id: number) => string;
 
-let idGenerator: typeof createCustomerID;
+// let idGenerator: typeof createCustomerID;
 
-idGenerator = (name: string, id: number) => `${id} / ${name}`;
-idGenerator = createCustomerID;
+// idGenerator = (name: string, id: number) => `${id} / ${name}`;
+// idGenerator = createCustomerID;
 
 // console.log(idGenerator('Boris', 20));
 
 
 // Task 3.02=======================================================================
 
-function createCustomer(name: string, age?: number, city?: string): void {
-    // console.log(`Customer: ${name}`);
-
-    if (age) {
-        // console.log(`Customer age: ${age}`);
-    }
-
-    if (city) {
-        // console.log(`Customer city: ${city}`);
-    }
-}
-
-createCustomer('Vika', 35);
+// createCustomer('Vika', 35);
 
 // console.log(getBookTitlesByCategory());
 // console.log(logFirstAvailable());
 
-function getBookByID(id: Book['id']): Book | undefined {
-    const books = getAllBooks();
-    return books.find(book => book.id === id);
-}
-
 // console.log(getBookByID(1));
 
 
-function сheckoutBooks(customer: string, ...bookIDs: number[]): string[] {
-    // console.log(`Customer name: ${customer}`);
-    return bookIDs
-        .map(id => getBookByID(id))
-        .filter(book => book.available)
-        .map(book => book.title);
-}
-
 // console.log(сheckoutBooks('NoName Customer', 1, 3, 4));
 
-const myBooks = сheckoutBooks('Ann', 1, 2, 4);
+const myBooks = checkoutBooks('Ann', 1, 2, 4);
 
 // console.log(myBooks);
 
 
 // Task 3.03 =====================================================
 
-function getTitles(author: string): string[];
-function getTitles(available: boolean): string[];
-function getTitles(id: number, available: boolean): string[];
-function getTitles(...args: [string | boolean] | [number, boolean]): string[] {
-    const books = getAllBooks();
-
-    if (args.length === 1) {
-        const [arg] = args;
-
-        if (typeof arg === 'string') {
-            return books
-                .filter(book => book.author === arg)
-                .map(book => book.title);
-        } else if (typeof arg === 'boolean') {
-            return books
-                .filter(book => book.available === arg)
-                .map(book => book.title);
-        }
-    } else if (args.length === 2) {
-        const [id, available] = args;
-        return books
-            .filter(book => book.id === id && book.available === available)
-            .map(book => book.title);
-    }
-}
-
 // const checkedOutBooks = getTitles('Lea Verou');
 // console.log(checkedOutBooks);
 
-
-
 // Task 3.04 ============================================================
-
-function checkedOutBooks(data: any): asserts data is string {
-    if(typeof data !== 'string') {
-        // throw new Error ('value should have been a string');
-    }
-}
-
-function bookTitleTransform(title: any): string {
-    checkedOutBooks(title);
-    return [...title].reverse().join('');
-}
 
 // console.log(bookTitleTransform('TypeScript is cool!'));
 // console.log(bookTitleTransform(12));
 
-
 // Task 4.01 ===============================================================
 
-function printBook(book: Book): void {
-    // console.log(`${book.title} by ${book.author}`);
-}
+// const myBook: Book = {
+//     id: 5,
+//     title: 'Colors, Backgrounds, and Gradients',
+//     author: 'Eric A. Meyer',
+//     available: true,
+//     category: Category.CSS,
+//     year: 2015,
+//     copies: 3
+//     pages: 200,
+//     markDamaged: (reason: string) => console.log(`Damaged: ${reason}`)
+//     markDamaged: (reason: string) => console.log(`Damaged: ${reason}`)
+// };
 
-const myBook: Book = {
-    id: 5,
-    title: 'Colors, Backgrounds, and Gradients',
-    author: 'Eric A. Meyer',
-    available: true,
-    category: Category.CSS,
-    // year: 2015,
-    // copies: 3
-    pages: 200,
-    markDamaged(reason: string) {
-        console.log(`Damaged: ${reason}`);
-    }
+// printBook(myBook);
+
+// myBook.markDamaged('missing back cover');
+
+// Task 4.02 =========================================================================\
+
+// let logDamage: Logger;
+
+// logDamage = someDamade;
+
+// logDamage('Hello');
+
+// Task 4.03 =========================================
+
+// const favoriteAuthor: Author = {
+//     name: 'Edgar Po',
+//     email: 'some_email@gmail.com',
+//     numBooksPublished: 100
+// };
+
+// const favoriteLibrarian: Librarian = {
+//     name: 'Edgar Po',
+//     email: 'some_email@gmail.com',
+//     department: 'fiction',
+//     assistCustomer: (custName, bookTitle) => console.log(`The book is: ${custName} ${bookTitle}`)
+//     // assistCustomer (custName, bookTitle) {
+//     //     console.log(`The book is: ${custName} ${bookTitle}`);
+//     // }
+//     // assistCustomer: null
+// };
+
+// console.log(favoriteLibrarian.assistCustomer('Edgar Po', 'fiction'));
+
+
+// Task 4.04 =============================================================
+
+// const offer: any = {
+//     book: {
+//         title: 'Essential TypeScript',
+//     },
+// };
+
+// console.log(offer.magazine);
+// console.log(offer.magazine?.getTitle());
+// console.log(offer.book.getTitle?.());
+// console.log(offer.book.authors?.[0]);
+
+
+// Task 4.05 ==================================================================
+
+
+
+
+
+// console.log(getProperty(myBook, 'title'));
+// console.log(getProperty(myBook, 'markDamaged'));
+// console.log(getProperty(myBook, 'isbn'));
+
+
+// Task 5.01 ===================================================
+
+
+
+// let ref = new ReferenceItem(123, 'TypeScript', 2022);
+// console.log(ref);
+// ref.printItem();
+
+// ref.publisher = 'typescript';
+// console.log(ref.publisher);
+// console.log(ref.getID());
+
+
+
+// const refBook: RefBook  = new RefBook(1, 22, 'Type Script learning', 2023);
+// console.log(refBook);
+
+// refBook.printItem();
+// console.log(refBook.getID());
+// console.log(refBook.edition);
+
+// Task 5.03 ==============================================================
+
+// let refBook: RefBook = new RefBook (2, 22, 'Type Script learning', 2023);
+// refBook.printCitation();
+
+
+// Task 5.04 ======================================================================
+
+
+
+// let favoriteLibrarian: Librarian = new UL.UniversityLibrarian();
+// favoriteLibrarian.name = 'Anna';
+// favoriteLibrarian.assistCustomer('Boris', 'TypeScript');
+
+// Task 5.05 ==========================================================
+
+
+
+// const personbook: PersonBook = {
+//     name: 'Anna',
+//     author: 'Anna',
+//     available: false,
+//     category: Category.Angular,
+//     email: 'anna@gmail.com',
+//     id: 168,
+//     title: 'TypeScript'
+// };
+
+
+
+// const opt: TOptions = {duration: 20};
+// const opt2 = setDefaultConfig(opt);
+// console.log(opt);
+// console.log(opt2);
+// console.log(Object.is(opt, opt2));
+
+// Task 6.03, 6.04 ==========================================================
+
+// const refBook2: RefBook = new RefBook (1, 22, 'Type Script learning', 2023);
+// printRefBook(refBook2);
+
+// const favoriteLibrarian: Librarian = new UL.UniversityLibrarian();
+// printRefBook(favoriteLibrarian);
+
+
+// Task 6.05 =================================================
+
+// const flag = true;
+
+// if (flag) {
+//     import('./classes')
+//         .then(m => {
+//             const reader = new m.Reader();
+//             reader.name = 'Anna';
+//             reader.take(getAllBooks()[0]);
+
+//             console.log(reader);
+//         })
+//         .catch(err => console.log(err))
+//         .finally(() => console.log('Complete!'));
+// }
+
+// if (flag) {
+//     const m =  await import('./classes');
+//     const reader = new m.Reader();
+//     reader.name = 'Anna';
+//     reader.take(getAllBooks()[0]);
+
+//     console.log(reader);
+// }
+
+
+// Task 6.06 ===============================================
+
+// const library: Library = new Library();
+
+const library: Library = {
+    id: 10,
+    address: 'Kyiv',
+    name: 'Vika'
 };
 
-printBook(myBook);
-
-myBook.markDamaged('missing back cover');
-
-
+console.log(library);
