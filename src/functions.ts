@@ -62,14 +62,14 @@ export function createCustomerID(name: string, id: number): string {
 }
 
 export function createCustomer(name: string, age?: number, city?: string): void {
-    // console.log(`Customer: ${name}`);
+    console.log(`Customer: ${name}`);
 
     if (age) {
-        // console.log(`Customer age: ${age}`);
+        console.log(`Customer age: ${age}`);
     }
 
     if (city) {
-        // console.log(`Customer city: ${city}`);
+        console.log(`Customer city: ${city}`);
     }
 }
 
@@ -136,6 +136,11 @@ export function getProperty(book: Book, prop: BookProperties): any {
     return typeof value === 'function'?value.name:value;
 }
 
+export function getObjectProperty<TObject, TKey extends keyof TObject>(obj: TObject, prop: TKey): TObject[TKey] | string {
+    const value = obj[prop];
+    return typeof value === 'function'?value.name:value;
+}
+
 export function setDefaultConfig(options: TOptions) {
     options.duration??= 100,
     options.speed ??= 60;
@@ -151,4 +156,9 @@ export function assertRefBookInstance (condition: any): asserts condition {
 export function printRefBook (data: any): void {
     assertRefBookInstance (data instanceof RefBook);
     data.printItem();
+}
+
+
+export function purge<T>(inventory: Array<T>): T[] {
+    return inventory.slice(2);
 }

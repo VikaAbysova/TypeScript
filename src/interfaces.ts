@@ -4,8 +4,8 @@ interface Book {
     id: number;
     title: string;
     author: string;
-    available: boolean;
-    category: Category;
+    available?: boolean;
+    category?: Category;
     pages?: number;
     // markDamaged?: (reason: string) => void;
     markDamaged?: DamageLogger;
@@ -35,4 +35,14 @@ interface TOptions {
     speed?: number;
 }
 
-export { Author, Book, Librarian, Person, TOptions, DamageLogger as Logger };
+interface Magazine {
+    title: string;
+    publisher?: string;
+}
+
+interface ShelfItem {
+    title: string;
+}
+
+
+export { ShelfItem, Magazine, Author, Book, Librarian, Person, TOptions, DamageLogger as Logger };

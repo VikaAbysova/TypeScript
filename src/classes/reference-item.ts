@@ -1,5 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 
+import { timeout } from './decorators';
+
 abstract class ReferenceItem {
 
     abstract printCitation(): void;
@@ -33,10 +35,11 @@ abstract class ReferenceItem {
         this.#id = id;
     }
 
+    @timeout(2000)
     printItem(): void{
         console.log(`${this.title} was published in ${this.year}`);
         console.log(ReferenceItem.department);
-        console.log('chek', Object.getPrototypeOf(this).constructor.department);
+        console.log('check', Object.getPrototypeOf(this).constructor.department);
     }
 
     getID(){

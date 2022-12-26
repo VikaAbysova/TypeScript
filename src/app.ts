@@ -1,9 +1,12 @@
-import { ReferenceItem, UL, RefBook } from './classes';
+import { Shelf, ReferenceItem, UL, RefBook } from './classes';
 import { Category } from './enums';
-import { printRefBook, checkoutBooks, createCustomer, createCustomerID, printBook, setDefaultConfig, someDamade, getAllBooks } from './functions';
-import { Librarian, Author, Book, Logger, TOptions } from './interfaces';
-import { PersonBook } from './types';
+import { purge, printRefBook, checkoutBooks, createCustomer, createCustomerID, printBook, someDamade, getAllBooks, getObjectProperty } from './functions';
+import { Magazine, Librarian, Author, Book, Logger, TOptions } from './interfaces';
+import { BookRequiredFields, PersonBook, UpdatedBook, СreateCustomerFunctionType } from './types';
 import { Library } from './classes/library';
+import { Shelf2 } from './classes/shelf';
+import { UniversityLibrarian } from './classes/university-librarian';
+
 
 showHello('greeting', 'TypeScript');
 
@@ -246,10 +249,145 @@ const myBooks = checkoutBooks('Ann', 1, 2, 4);
 
 // const library: Library = new Library();
 
-const library: Library = {
-    id: 10,
-    address: 'Kyiv',
-    name: 'Vika'
-};
+// const library: Library = {
+//     id: 10,
+//     address: 'Kyiv',
+//     name: 'Vika'
+// };
 
-console.log(library);
+// console.log(library);
+
+// Task 7.01  =======================================================
+
+// const inventory: Book[] = [
+
+//     { id: 10, title: 'The C Programming Language', author: '???', available: true, category: Category.Software},
+//     { id: 11, title: 'Code Complete', author: 'Steve McConnell', available: true, category: Category.Software },
+//     { id: 12, title: '8-Bit Graphics with Cobol', author: 'A. B.', available: true, category: Category.Software },
+//     { id: 13, title: 'Cool autoexec.bat Scripts!', author: 'C. D.', available: true, category: Category.Software }
+
+// ];
+
+// const result1 = purge(inventory);
+// console.log(result1);
+
+// const result2 = purge([1, 2, 3]);
+// console.log(result2);
+
+// Task 7.02, 7,03 =================================================================
+
+// const bookShelf: Shelf<Book> = new Shelf<Book>();
+// const bookShelf = new Shelf<Book>();
+
+// inventory.forEach(book => {
+//     bookShelf.add(book);
+// });
+
+// console.log(bookShelf.getFirst().title);
+
+// const magazines: Magazine[] =
+// [
+//     { title: 'Programming Language Monthly', publisher: 'Code Mags' },
+//     { title: 'Literary Fiction Quarterly', publisher: 'College Press' },
+//     { title: 'Five Points', publisher: 'GSU' }
+// ];
+
+// const magazineShelf = new Shelf<Magazine>();
+
+// magazines.forEach(magazine => {
+//     magazineShelf.add(magazine);
+// });
+
+// console.log(magazineShelf.getFirst().title);
+
+// magazineShelf.printTitles();
+
+// console.log(magazineShelf.find('Five Points'));
+
+// console.log(getObjectProperty(magazines[0], 'title'));
+
+// console.log(getObjectProperty(inventory[1], 'title'));
+
+
+
+// console.log(bookShelf);
+// console.log(magazineShelf);
+
+// let a = [{key1: 1}, {key2: 3}];
+
+
+// const bookShelf2 = new Shelf2();
+
+// inventory.forEach(book => bookShelf2.add(book));
+
+// console.log(bookShelf2.getFirst().title);
+
+// const magazineShelf2 = new Shelf2();
+
+// magazines.forEach(magazine => {
+//     magazineShelf2.add(magazine);
+// });
+
+// console.log(magazineShelf2.getFirst().title);
+
+
+// Task 7.04 ==================================================
+
+// const bookRequiredFields: BookRequiredFields = {
+//     id: 1,
+//     title: 'Learn Angular',
+//     author: 'Anna',
+//     available: false,
+//     category: Category.Angular,
+//     pages: 100,
+//     markDamaged: null
+// };
+
+// const updatedBook: UpdatedBook = {
+//     id: 2,
+//     title: 'Learn React',
+//     author: 'Olga',
+//     available: true,
+//     category: Category.Software,
+//     pages: 400,
+//     markDamaged: null
+// };
+
+// let params: Parameters<СreateCustomerFunctionType>;
+// params = ['Vika', 34, 'Kyiv'];
+// createCustomer(...params);
+
+// Task 8.01, 8.02 ====================================================
+// UL.UniversityLibrarian['b'] = 3;
+// const favoriteLibrarian = new UL.UniversityLibrarian();
+// const favoriteLibrarian2 = new UL.UniversityLibrarian();
+
+// UL.UniversityLibrarian.prototype['a'] = 3;
+// console.log(favoriteLibrarian);
+// favoriteLibrarian.name = 'Anna';
+// favoriteLibrarian['printLibrarian']();
+
+
+// Task 8.03 ==============================================================
+
+// const favoriteLibrarian = new UL.UniversityLibrarian();
+// favoriteLibrarian.assistFaculty = null;
+// favoriteLibrarian.teachCommunity = null;
+// console.log(favoriteLibrarian);
+
+// Task 8.04 ============================================================
+
+// const refBook: RefBook = new RefBook (1, 22, 'Type Script learning', 2023);
+// refBook.printItem();
+//
+
+
+// Task 8.05 ==================================================================
+
+const favoriteLibrarian = new UL.UniversityLibrarian();
+console.log(favoriteLibrarian);
+favoriteLibrarian.name = 'Anna';
+favoriteLibrarian.assistCustomer('Boris', 'Learn TS');
+
+
+
