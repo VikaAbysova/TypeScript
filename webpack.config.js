@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -17,6 +18,7 @@ module.exports = {
     // devserver
     devServer: {
         contentBase: './dist',
+        // static: './',
         open: true,
         hot: true,
     },

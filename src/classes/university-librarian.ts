@@ -1,10 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 import * as Interfaces from './../interfaces';
-import { logMethod, logParameter, logger, sealed, writable } from './decorators';
+import { format, logMethod, logParameter} from './decorators'; // logger, sealed, writable }
 
 // @sealed('UniversityLibrarian')
 // @logger
 class UniversityLibrarian implements Interfaces.Librarian {
+    @format()
     name: string;
     email: string;
     department: string;

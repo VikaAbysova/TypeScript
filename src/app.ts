@@ -1,11 +1,14 @@
-import { Shelf, ReferenceItem, UL, RefBook } from './classes';
+/* eslint-disable no-unused-vars */
+import { UL } from './classes';   // Shelf, ReferenceItem, RefBook } from './classes';
 import { Category } from './enums';
-import { purge, printRefBook, checkoutBooks, createCustomer, createCustomerID, printBook, someDamade, getAllBooks, getObjectProperty } from './functions';
+import { purge, printRefBook, checkoutBooks, createCustomer, createCustomerID, someDamade, getAllBooks, getObjectProperty, getBooksByCategory, logCategorySearch, getBooksByCategoryPromise, logSearchResults } from './functions';
 import { Magazine, Librarian, Author, Book, Logger, TOptions } from './interfaces';
-import { BookRequiredFields, PersonBook, UpdatedBook, СreateCustomerFunctionType } from './types';
+import { BookRequiredFields, PersonBook, UpdatedBook, CreateCustomerFunctionType } from './types';
 import { Library } from './classes/library';
 import { Shelf2 } from './classes/shelf';
 import { UniversityLibrarian } from './classes/university-librarian';
+
+import { RefBook } from './classes';
 
 
 showHello('greeting', 'TypeScript');
@@ -63,7 +66,7 @@ function showHello(divName: string, name: string) {
 
 // console.log(сheckoutBooks('NoName Customer', 1, 3, 4));
 
-const myBooks = checkoutBooks('Ann', 1, 2, 4);
+// const myBooks = checkoutBooks('Ann', 1, 2, 4);
 
 // console.log(myBooks);
 
@@ -384,10 +387,54 @@ const myBooks = checkoutBooks('Ann', 1, 2, 4);
 
 // Task 8.05 ==================================================================
 
-const favoriteLibrarian = new UL.UniversityLibrarian();
-console.log(favoriteLibrarian);
-favoriteLibrarian.name = 'Anna';
-favoriteLibrarian.assistCustomer('Boris', 'Learn TS');
+// const favoriteLibrarian = new UL.UniversityLibrarian();
+// console.log(favoriteLibrarian);
+// favoriteLibrarian.name = 'Anna';
+// favoriteLibrarian.assistCustomer('Boris', 'Learn TS');
+
+
+// Task 8.06 ===================================================================
+// const favoriteLibrarian = new UL.UniversityLibrarian();
+// favoriteLibrarian.name = 'Anna';
+// console.log(favoriteLibrarian.name);
+// favoriteLibrarian.assistCustomer('Boris', 'Learn TS');
+// console.log(favoriteLibrarian);
+
+
+// Task 8.07 =======================================================================
+// const refBook: RefBook = new RefBook (1, 22, 'Type Script learning', 2023);
+// refBook.copies = 10;
+// console.log(refBook.copies);
+
+
+// Task 9.01 =========================================================================
+// console.log('Begin');
+// getBooksByCategory(Category.JavaScript, logCategorySearch);
+// getBooksByCategory(Category.Software, logCategorySearch);
+// console.log('End');
+
+// Task 9.02 ==========================================================================
+// console.log('Begin');
+// getBooksByCategoryPromise(Category.JavaScript)
+//     .then(titles => {
+//         console.log(titles);
+//         return Promise.resolve(titles.length);
+//     })
+//     .then(n => console.log(n))
+//     .catch(reason => console.log(reason));
+// getBooksByCategoryPromise(Category.Software)
+//     .then(titles => console.log(titles))
+//     .catch(reason => console.log(reason));
+// console.log('End');
+
+// Task 9.03 ===========================================================================
+// console.log('Begin');
+// logSearchResults(Category.JavaScript);
+// logSearchResults(Category.Software).catch(err => console.log(err));
+// console.log('End');
+
+
+
 
 
 
